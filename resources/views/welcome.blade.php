@@ -81,7 +81,17 @@
          }
       </script>
 
-
+<style>
+div.sticky {
+  /*position: -webkit-sticky;
+  position: relative;
+  /*top: 0;
+  padding: 5px;*/
+  
+  background-color: #cae8ca;
+  border: 2px solid #4CAF50;
+}
+</style>
 
     </head>
     <!-- END HEAD -->
@@ -92,8 +102,9 @@
 
 
         <div class="container-fluid" >
+
             <div class="login-wrapper row" >
-                
+
 
                 <div id="login" class="col-xl-12" style="  padding-top: 0; margin-top: 0;   " >
 
@@ -121,15 +132,30 @@
                         </div>                                                           
 
                      </div>
+                        <!--<div class="col-lg-12" >
+                            Helpline: 051-4901444
+                            Email: cng.safety.taskforce@gmail.com
+                        </div>-->
+
                      <div class="form-group row " >       
-                        <div class="col-lg-12" >
+                        <div class="col-lg-1" >
+                            &nbsp;
+                        </div>                        
+                        <div class="col-lg-8" >
+                            
                                 <h1 style="text-align: center;"><strong>Pakistan Cng Safety</strong></h1>
                                 <h5 style="text-align: center; font-style: italic; ">Promoting Green, Clean Fuel with Safety for all</h5>
                                 <h6 style="text-align: center;">Compressed Natural Gas is not only a Clean, Green and economical alternative Fuel, it is safe and user friendly</h6>
                                 <h6 style="text-align: center;">
                                 We need to learn the safety precautions as associated with all types of fuels</h6>
-<script id="godaddy-security-s" src="https://cdn.sucuri.net/badge/badge.js" data-s="2002" data-i="dfac4ca75999863a0c7b8c6ca49322e7a73bbadcf4" data-p="o" data-c="d" data-t="g"></script>                                
-                            </div>
+<script id="godaddy-security-s" src="https://cdn.sucuri.net/badge/badge.js" data-s="2002" data-i="dfac4ca75999863a0c7b8c6ca49322e7a73bbadcf4" data-p="o" data-c="d" data-t="g"></script>
+                        </div>
+                        <div class="sticky col-xl-3" >
+                            <h6 style="text-align: center;"><strong>Email:</strong></h6>
+                            <h6 style="text-align: center;">cng.safety.taskforce@gmail.com</h6>
+                            <h6 style="text-align: center;"><strong>Helpline:</strong></h6>
+                            <h6 style="text-align: center;">051-4901444</h6>
+                        </div>                            
                      </div>
                     <!--<form id="searchkizzler" method="POST" action="{{route('testedcylinders-search')}}">
                                     {{ csrf_field() }}-->
