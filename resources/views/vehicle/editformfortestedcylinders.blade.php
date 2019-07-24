@@ -257,6 +257,9 @@
                                                             <div class="controls">
                                                                 <input type="text" value="{{date('m/d/Y', strtotime($cylinderdetails[0]->InspectionExpiryDate))}}" class="form-control" data-format="mm/dd/yyyy" placeholder="Expiry Date" id="expiry" name="expiry" readonly>
                                                             </div>
+                                                <input type="hidden" id ="year" name="year">
+                                                <input type="hidden" id ="month" name="month">
+                                                <input type="hidden" id ="day" name="day">                                                            
                                                         </div>
                                                     </div>   
                                                 </div>  <!-- end of left column -->
@@ -310,6 +313,9 @@
 }*/
 $(function(){
 var expiry =document.getElementById("expiry");
+var expiryyear =document.getElementById("year");
+var expirymonth =document.getElementById("month");
+var expiryday =document.getElementById("day");
 
    $(".datepicker").change(function() {
     var addressinput = $(this).val();
@@ -320,10 +326,13 @@ var expiry =document.getElementById("expiry");
     var day = d.getDate();
     var year5 = new Date(year + 5, month, day)
 
+     expiryyear.value =year5.getFullYear();
+     expirymonth.value =year5.getMonth();
+     expiryday.value =year5.getDate() ;
     
     expiry.value=year5.toLocaleDateString();;
 
-    console.log(year5);
+    //console.log(year5);
    });
 
    $(".datepicker").focusout(function() {
@@ -336,7 +345,11 @@ var expiry =document.getElementById("expiry");
     var year5 = new Date(year + 5, month, day)
 //d.toLocaleDateString();
     expiry.value=year5.toLocaleDateString();;
-    console.log(year5);
+     
+     expiryyear.value =year5.getFullYear();
+     expirymonth.value =year5.getMonth();
+     expiryday.value =year5.getDate() ;    
+    //console.log(year5);
     //console.log(addressinput);
    });
 

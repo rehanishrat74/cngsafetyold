@@ -9,6 +9,7 @@ use Image;
 use App\Rules\engravedCylinderno;
 use App\Rules\engravedCylindernoUpdate;
 use File;
+use DateTime;
 class CylindersController extends Controller
 {
     /**
@@ -711,25 +712,35 @@ public function showUploadFile(Request $request) {
             'brand'=>'required',
             'standard'=>'required',
             'SerialNo'=>['required',new engravedCylinderno($request->input('SerialNo'),$labUser) ],
-            'edate'=>'required',
-            'expiry'=>'required',
+            'edate'=>'required',  //inspection date
+            'expiry'=>'required',  //expiry date
             'method'=>'required',
         ));
-
 
 
             $CountryOfOrigin=$request->input('CountryOfOrigin');            
             $BrandName=$request->input('brand');
             $Standard=$request->input('standard');
             $SerialNumber=$request->input('SerialNo');            
-            $dt1=$request->input('edate');
+            $dt1=$request->input('edate');   //inspection date
             $Date=date('Y-m-d', strtotime($dt1));
             
             $method=$request->input('method');
-            $dt1=$request->input('expiry');
-            $InspectionExpiryDate=date('Y-m-d', strtotime($dt1));
 
-            
+            //---------setting inspection expiry date ---------------------
+
+            $eyear= $request->year;
+            $emonth= $request->month;
+            $eday= $request->day;
+            $exdate=$eday."/".$emonth."/".$eyear;           
+
+            // Parse a date using a user-defined format
+            $expirydate5years = DateTime::createFromFormat('d/m/Y', $exdate);            
+            $InspectionExpiryDate = $expirydate5years->format('Y-m-d');
+            //---------end setting inspection expiry date ---------------------            
+
+
+
             $LabUser=Auth::user()->email;
             $LabCTS=Auth::user()->labname;
             $id=0;
@@ -1641,7 +1652,7 @@ $testedcylinders->appends($querystringArray);
             'brand'=>'required',
             'standard'=>'required',
             'SerialNo'=>['required',new engravedCylindernoUpdate($request->input('SerialNo'),$labUser,$id) ],
-            'edate'=>'required',
+            'edate'=>'required',  //inspection date
             'expiry'=>'required',         
             'method' =>'required',
         ));
@@ -1651,11 +1662,26 @@ $testedcylinders->appends($querystringArray);
             $BrandName=$request->input('brand');
             $Standard=$request->input('standard');
             $SerialNumber=$request->input('SerialNo');
-            $dt1=$request->input('edate');
-            $Date=date('Y-m-d', strtotime($dt1));
+            $dt1=$request->input('edate');      
+            $Date=date('Y-m-d', strtotime($dt1));   //inspection date
 
-            $dt1=$request->input('expiry');
-            $InspectionExpiryDate=date('Y-m-d', strtotime($dt1));
+
+            //---------setting inspection expiry date ---------------------
+
+            $eyear= $request->year;
+            $emonth= $request->month;
+            $eday= $request->day;
+            $exdate=$eday."/".$emonth."/".$eyear;           
+
+            // Parse a date using a user-defined format
+            $expirydate5years = DateTime::createFromFormat('d/m/Y', $exdate);            
+            $InspectionExpiryDate = $expirydate5years->format('Y-m-d');
+            //---------end setting inspection expiry date -----------------
+
+
+
+            //$dt1=$request->input('expiry');
+            //$InspectionExpiryDate=date('Y-m-d', strtotime($dt1));
 
             $method=$request->input('method');
             $LabUser=Auth::user()->email;
