@@ -316,18 +316,26 @@ var expiry =document.getElementById("expiry");
 var expiryyear =document.getElementById("year");
 var expirymonth =document.getElementById("month");
 var expiryday =document.getElementById("day");
+    
+    
+    /*setting expiry at the time of loading the page. this value is in db*/
+    var inityear5= new Date(expiry.value);    
+     expiryyear.value =inityear5.getFullYear();
+     expirymonth.value =inityear5.getMonth() +1; //get month returns value from 0 to 11
+     expiryday.value =inityear5.getDate() ;    
+    /*setting expiry at the time of loading the page*/
 
    $(".datepicker").change(function() {
     var addressinput = $(this).val();
     var d = new Date(addressinput); //"03/25/2015"
 
     var year = d.getFullYear();
-    var month = d.getMonth();
+    var month = d.getMonth() ;
     var day = d.getDate();
     var year5 = new Date(year + 5, month, day)
 
      expiryyear.value =year5.getFullYear();
-     expirymonth.value =year5.getMonth();
+     expirymonth.value =year5.getMonth()+1;
      expiryday.value =year5.getDate() ;
     
     expiry.value=year5.toLocaleDateString();;
@@ -347,7 +355,7 @@ var expiryday =document.getElementById("day");
     expiry.value=year5.toLocaleDateString();;
      
      expiryyear.value =year5.getFullYear();
-     expirymonth.value =year5.getMonth();
+     expirymonth.value =year5.getMonth()+1;
      expiryday.value =year5.getDate() ;    
     //console.log(year5);
     //console.log(addressinput);

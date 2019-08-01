@@ -295,15 +295,12 @@ var expiryday =document.getElementById("day");
 
 
      expiryyear.value =year5.getFullYear();
-     expirymonth.value =year5.getMonth();
+     expirymonth.value =year5.getMonth()+1;
      expiryday.value =year5.getDate() ;
 
-     //console.log(expiryyear.value)
-     //console.log(expirymonth.value)
-     //console.log(expiryday.value)
 
 
-    //console.log(year5);
+
     
     expiry.value=year5.toLocaleDateString();;
     //console.log(expiry.value);
@@ -319,19 +316,17 @@ var expiryday =document.getElementById("day");
     var month = d.getMonth();
     var day = d.getDate();
     var year5 = new Date(year + 5, month, day)
-//d.toLocaleDateString();
+
     expiry.value=year5.toLocaleDateString();;
     //console.log(year5);
     //console.log(addressinput);
 
 
      expiryyear.value =year5.getFullYear();
-     expirymonth.value =year5.getMonth();
+     expirymonth.value =year5.getMonth()+1;
      expiryday.value =year5.getDate() ;
 
-     //console.log("expiryyear.value")
-     //console.log("expirymonth.value")
-     //console.log("expiryday.value")
+
 
    });
 

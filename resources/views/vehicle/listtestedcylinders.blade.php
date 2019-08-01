@@ -89,6 +89,14 @@
                                                 <option value="1000">Page size 1000</option>
 
                                         </select>                                                                            
+                                        <select class="form-control" id="lab" name="lab">
+                                                 @foreach ($labs as $lab)       
+                                                <option value="{{$lab->Labname}}">{{$lab->Labname}}</option>
+                                                @endforeach
+
+
+                                        </select>                                               
+
                                         <select class="form-control" id="searchby" name="searchby" 
                                         onclick="setplaceholder()"
                                         >
@@ -178,19 +186,21 @@
 
 <?php if ((Auth::user()->regtype=="hdip" || Auth::user()->regtype=="admin") && Auth::user()->readonly!=1) {?>
 <td><a href="{{route('editformfortestedcylinders',$cylinder->id)}}">{{$cylinder->id}}</a></td>
+<td><a href="{{route('editformfortestedcylinders',$cylinder->id)}}">{{$cylinder->LabCTS}}</a></td>
 <?php 
 } 
 else
 {
 ?>
                                                <td>{{$cylinder->id}}</td>
+                                               <td>{{$cylinder->LabCTS}}</td>
 <?php }
 
 ?>
 
 
-                                                     <!--<td><a href="{{route('editformfortestedcylinders',$cylinder->id)}}">{{$cylinder->id}}</a></td>-->
-                                                     <td>{{$cylinder->LabCTS}}</td>
+                                                     
+                                                     
                                                      <td>{{$cylinder->BrandName}}</td>
                                                      <td>{{$cylinder->Standard}}</td>
                                                      <td>{{$cylinder->SerialNumber}}

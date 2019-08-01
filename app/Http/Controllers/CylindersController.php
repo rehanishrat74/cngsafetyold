@@ -1480,7 +1480,16 @@ $testedcylinders->appends($querystringArray);
 
 
 
-    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems])->with('page',1);
+                $labs=DB::table('users')                    
+                    ->select ('id','Labname')
+                    ->where ('regtype','=','laboratory')
+                    ->where ('deleted','=',0)
+                    ->orderby($sort,'desc')
+                    ->paginate(10);
+
+
+
+    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems,'labs'=>$labs])->with('page',1);
 
     }
 
@@ -1490,6 +1499,7 @@ $testedcylinders->appends($querystringArray);
         $pagesize=$request->input('pagesize');
         $searchby=$request->input('searchby');
         $searchvalue=$request->input('searchvalue');
+        $labName =$request->input('lab');
 
 
 
@@ -1566,7 +1576,8 @@ $testedcylinders->appends($querystringArray);
                     ->leftjoin('vehicle_particulars','RegisteredCylinders.stickerSerialNo','=','vehicle_particulars.StickerSerialNo')                
                     ->select ('id','LabCTS','BrandName','Standard' ,'RegisteredCylinders.SerialNumber','CountryOfOrigin' , 'LabUser' , 'Date', 'InspectionExpiryDate' ,   'RegisteredCylinders.stickerSerialNo','method',
                         'vehicle_particulars.Registration_no')
-                    ->where ($searchby,'=',$searchvalue)
+                    ->where ($searchby,'=',$searchvalue)                    
+                    ->where ('LabCTS','=',$labName)                    
                     ->orderby($sort,'desc')
                     ->paginate(10);            
         }
@@ -1577,7 +1588,8 @@ $testedcylinders->appends($querystringArray);
                     ->select ('id','LabCTS','BrandName','Standard' ,'RegisteredCylinders.SerialNumber','CountryOfOrigin' , 'LabUser' , 'Date', 'InspectionExpiryDate' ,   'RegisteredCylinders.stickerSerialNo','method',
                         'vehicle_particulars.Registration_no')
                     ->where ($searchby,'=',$searchvalue)
-                    ->where ('LabUser','=',$labUser)
+                    ->where ('LabUser','=',$labUser)                    
+                    ->where ('LabCTS','=',$labName)                    
                     ->orderby($sort,'desc')
                     ->paginate(10);
         }
@@ -1603,9 +1615,14 @@ $testedcylinders->appends($querystringArray);
 
 $testedcylinders->appends($querystringArray);
 
+                $labs=DB::table('users')                    
+                    ->select ('id','Labname')
+                    ->where ('regtype','=','laboratory')
+                    ->where ('deleted','=',0)
+                    ->orderby($sort,'desc')
+                    ->paginate(10);
 
-
-    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems])->with('page',1);
+    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems,'labs'=>$labs])->with('page',1);
     
 
 
@@ -1677,7 +1694,6 @@ $testedcylinders->appends($querystringArray);
             $expirydate5years = DateTime::createFromFormat('d/m/Y', $exdate);            
             $InspectionExpiryDate = $expirydate5years->format('Y-m-d');
             //---------end setting inspection expiry date -----------------
-
 
 
             //$dt1=$request->input('expiry');
@@ -1801,9 +1817,14 @@ $testedcylinders->appends($querystringArray);
 
 $testedcylinders->appends($querystringArray);
 
+                $labs=DB::table('users')                    
+                    ->select ('id','Labname')
+                    ->where ('regtype','=','laboratory')
+                    ->where ('deleted','=',0)
+                    ->orderby($sort,'desc')
+                    ->paginate(10);
 
-
-    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems])->with('page',1);
+    return view ('vehicle.listtestedcylinders',['testedcylinders'=>$testedcylinders,'treeitems'=>$treeitems,'labs'=>$labs])->with('page',1);
         
 
     }
