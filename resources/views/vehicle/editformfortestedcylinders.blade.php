@@ -164,10 +164,10 @@
                                                         <div class="col-6">
                                                             <div class="controls">
                                                                 <select class="form-control" id="standard"  name="standard" >
-                                                                    <option value ="NZ5454" 
+                                                                    <option value ="NZS 5454-1989" 
 
-                                                                    <?php if ($cylinderdetails[0]->Standard=="NZ5454"){echo 'selected';}?>                                             
-                                                                     >NZ5454</option>
+                                                                    <?php if ($cylinderdetails[0]->Standard=="NZS 5454-1989"){echo 'selected';}?>                                             
+                                                                     >NZS 5454-1989</option>
                                                                     <option value ="ISO 11439" 
 
                                                                     <?php if ($cylinderdetails[0]->Standard=="ISO 11439"){echo 'selected';}?>  
@@ -187,15 +187,15 @@
                                                         <div class="col-6">
                                                             <div class="controls">
                                                                 <select class="form-control" id="method"  name="method" >
-                                                                    <option value ="Manual" 
+                                                                    <option value ="Hydrostatic - Direct" 
 
-                                                                    <?php if ($cylinderdetails[0]->Standard=="Manual"){echo 'selected';}?>                                             
-                                                                     >Manual</option>
-                                                                    <option value ="Automatic" 
+                                                                    <?php if ($cylinderdetails[0]->Standard=="Hydrostatic - Direct"){echo 'selected';}?>                                             
+                                                                     >Hydrostatic - Direct</option>
+                                                                    <option value ="Hydrostatic - Water Jaket" 
 
-                                                                    <?php if ($cylinderdetails[0]->Standard=="Automatic"){echo 'selected';}?>  
+                                                                    <?php if ($cylinderdetails[0]->Standard=="Hydrostatic - Water Jaket"){echo 'selected';}?>  
 
-                                                                     >Automatic</option>
+                                                                     >Hydrostatic - Water Jaket</option>
                                                                  </select>
                                                             </div>
                                                         </div>

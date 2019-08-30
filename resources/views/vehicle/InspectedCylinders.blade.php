@@ -149,7 +149,7 @@
                                                         <div class="col-6">
                                                             <div class="controls">
                                                                 <select class="form-control" id="standard"  name="standard" >
-                                                                    <option value ="NZ5454" <?php if(old('standard')){echo 'selected';} ?> >NZ5454</option>
+                                                                    <option value ="NZS 5454-1989" <?php if(old('standard')){echo 'selected';} ?> >NZS 5454-1989</option>
                                                                     <option value ="ISO 11439" <?php if(old('standard')){echo 'selected;';} ?> >ISO 11439</option>
                                                                  </select>
                                                             </div>
@@ -166,8 +166,8 @@
                                                         <div class="col-6">
                                                             <div class="controls">
                                                                 <select class="form-control" id="method"  name="method" >
-                                                                    <option value ="Manual" <?php if(old('method')){echo 'selected';} ?> >Manual</option>
-                                                                    <option value ="Automatic" <?php if(old('method')){echo 'selected;';} ?> >Automatic</option>
+                                                                    <option value ="Hydrostatic - Direct" <?php if(old('method')){echo 'selected';} ?> >Hydrostatic - Direct</option>
+                                                                    <option value ="Hydrostatic - Water Jaket" <?php if(old('method')){echo 'selected;';} ?> >Hydrostatic - Water Jaket</option>
                                                                  </select>
                                                             </div>
                                                         </div>
