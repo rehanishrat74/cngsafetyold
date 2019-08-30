@@ -20,7 +20,7 @@
                             <?php  
                             $highlightclass="";
                             
-                            if ($node->functionname=="Cylinder Inspection")
+                            if ($node->functionname=="Tested Cylinders")
                             {
                                 $highlightclass="open"; //highlight background
                             } else {$highlightclass="";}
@@ -82,31 +82,59 @@
                                
                             <div class="input-group primary">
                                         <select class="form-control" id="pagesize" name="pagesize">
-                                                <option value="10">Page size 10</option>
-                                                <option value="50">Page size 50</option>
-                                                <option value="100">Page size 100</option>
-                                                <option value="500">Page size 500</option>
-                                                <option value="1000">Page size 1000</option>
+                                                <option value="10" 
+                                                  <?php if (old("pagesize")=="10") {echo "selected";}?>
+                                                >Page size 10</option>
+                                                <option value="50"
+                                                  <?php if (old("pagesize")=="50") {echo "selected";}?>
+                                                >Page size 50</option>
+                                                <option value="100"
+                                                  <?php if (old("pagesize")=="100") {echo "selected";}?>
+                                                >Page size 100</option>
+                                                <option value="500"
+                                                  <?php if (old("pagesize")=="500") {echo "selected";}?>
+                                                >Page size 500</option>
+                                                <option value="1000"
+                                                    <?php if (old("pagesize")=="1000") {echo "selected";}?>
+                                                >Page size 1000</option>
 
                                         </select>                                                                            
                                         <select class="form-control" id="lab" name="lab">
                                                  @foreach ($labs as $lab)       
-                                                <option value="{{$lab->Labname}}">{{$lab->Labname}}</option>
+                                                  <option value="{{$lab->Labname}}" 
+                                                  <?php if (old("lab")=="$lab->Labname") {echo "selected";}?>
+                                                    >{{$lab->Labname}}</option>
                                                 @endforeach
 
+                                        </select>       
 
-                                        </select>                                               
 
-                                        <select class="form-control" id="searchby" name="searchby" 
-                                        onclick="setplaceholder()"
+
+
+
+
+
+
+                                      <select class="form-control" id="searchby" name="searchby" onclick="setplaceholder()"
                                         >
-                                                <option value="BrandName">Brand Name</option>
-                                                <option value="Standard">Standard</option>
-                                                <option value="SerialNumber">Serial no</option>
-                                                <option value="CountryOfOrigin">Country</option>
-                                                <option value="Date">Date</option>
-                                                <option value="InspectionExpiryDate">Expiry Date</option>
-                                                <option value="stickerSerialNo">Sticker No</option>
+
+                                                <option value="*" <?php if (old("searchby")=="*") {echo "selected";}?> >*</option>
+                                                <option value="BrandName" <?php if (old("searchby")=="BrandName") {echo "selected";}?> >Brand Name</option>
+                                                <option value="Standard" <?php if (old("searchby")=="Standard") {echo "selected";}?> >Standard</option>
+
+
+
+
+
+
+                                                
+                                                <option value="SerialNumber" <?php if (old("searchby")=="SerialNumber") {echo "selected";}?> >Serial no</option>
+
+                                                <option value="CountryOfOrigin" <?php if (old("searchby")=="CountryOfOrigin") {echo "selected";}?> >Country</option>
+
+                                                <option value="Date" <?php if (old("searchby")=="Date") {echo "selected";}?> >Date</option>
+                                                <option value="InspectionExpiryDate" <?php if (old("searchby")=="InspectionExpiryDate") {echo "selected";}?> >Expiry Date</option>
+                                                <option value="stickerSerialNo" <?php if (old("searchby")=="stickerSerialNo") {echo "selected";}?>>Sticker No</option>
                                         </select>
 
 

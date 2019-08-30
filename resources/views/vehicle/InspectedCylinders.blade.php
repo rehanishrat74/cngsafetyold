@@ -19,7 +19,7 @@
 
                             <?php  
                             $highlightclass="";
-                            if ($node->functionname=="Tested Cylinders")
+                            if ($node->functionname=="Cylinder Inspection")
                             {
                                 $highlightclass="open"; //highlight background
                             } else {$highlightclass="";}
@@ -50,7 +50,7 @@
                         <div class="page-title">
 
                             <div class="float-left">
-                                <!-- PAGE HEADING TAG - START --><h1 class="title">Test Cylinders</h1><!-- PAGE HEADING TAG - END -->                            </div>
+                                <!-- PAGE HEADING TAG - START --><h1 class="title">Cylinder Inspection</h1><!-- PAGE HEADING TAG - END -->                            </div>
 
                             <div class="float-right d-none">
                                 <ol class="breadcrumb">
