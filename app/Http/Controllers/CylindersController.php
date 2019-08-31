@@ -727,16 +727,28 @@ public function showUploadFile(Request $request) {
             
             $method=$request->input('method');
 
+
+
+            $diameter=$request->input('diameter');
+            $length=$request->input('length');
+            $capacity=$request->input('capacity');
+            $notes=$request->input('notes');
+
+
             //---------setting inspection expiry date ---------------------
 
+            /*
+            // following code when not using dtpicker but textbox.
             $eyear= $request->year;
             $emonth= $request->month;
             $eday= $request->day;
             $exdate=$eday."/".$emonth."/".$eyear;           
 
             // Parse a date using a user-defined format
-            $expirydate5years = DateTime::createFromFormat('d/m/Y', $exdate);            
-            $InspectionExpiryDate = $expirydate5years->format('Y-m-d');
+            //$expirydate5years = DateTime::createFromFormat('d/m/Y', $exdate);            
+            //$InspectionExpiryDate = $expirydate5years->format('Y-m-d'); */
+            $expirydate5years=$request->input('expiry');   //inspection date
+            $InspectionExpiryDate=date('Y-m-d', strtotime($expirydate5years));            
             //---------end setting inspection expiry date ---------------------            
 
 
@@ -766,13 +778,13 @@ public function showUploadFile(Request $request) {
                     if ($duplicateSnos[0]->existssno<=0)
                     {
                         DB::insert('insert into RegisteredCylinders
-                        (LabCTS,CountryOfOrigin,BrandName,Standard,SerialNumber,LabUser,Date,InspectionExpiryDate,method) VALUES (?,?,?,?,?,?,?,?,?) ',[$LabCTS,$CountryOfOrigin,$BrandName,$Standard,$SerialNumber,
-                                        $LabUser,$Date,$InspectionExpiryDate,$method]);
+                        (LabCTS,CountryOfOrigin,BrandName,Standard,SerialNumber,LabUser,Date,InspectionExpiryDate,method,diameter,length,capacity,notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ',[$LabCTS,$CountryOfOrigin,$BrandName,$Standard,$SerialNumber,
+                                        $LabUser,$Date,$InspectionExpiryDate,$method,$diameter,$length,$capacity,$notes]);
                         $id = DB::getPdo()->lastInsertId();
 
                     }
 
-
+            
                 /*
                 DB::table('CodeRollsSecondary')                
                 ->where(['serialno'=>$SerialNumber])
