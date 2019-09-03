@@ -206,18 +206,24 @@ if($date > $inspectionDate)
                                                      </td>
                                                      
                                                      <td>
-                                                        <a href="<?php if ($vehicle->formid==0){if ($inspectionExpired==0){echo route('newcylinderreg',$vehicle->Registration_no.'?recordid='.$vehicle->Record_no.'&stationno='.$vehicle->stationno);}}else{if ($vehicle->Inspection_Status=='completed'){if($inspectionExpired==1){echo route('newcylinderreg',$vehicle->Registration_no.'?recordid='.$vehicle->Record_no.'&stationno='.$vehicle->stationno);}else{echo route('showcylinder',$vehicle->formid);}}else{echo route('editcylinder',$vehicle->formid);}}?>">
-                                                            <i class="fa"></i>{{$vehicle->Inspection_Status}}</a>
+                                                        <?php if (Auth::user()->regtype!="workshop") {?>
 
+                                                        <a href="<?php if ($vehicle->formid==0){if ($inspectionExpired==0){echo route('newcylinderreg',$vehicle->Registration_no.'?recordid='.$vehicle->Record_no.'&stationno='.$vehicle->stationno);}}else{if ($vehicle->Inspection_Status=='completed'){if($inspectionExpired==1){echo route('newcylinderreg',$vehicle->Registration_no.'?recordid='.$vehicle->Record_no.'&stationno='.$vehicle->stationno);}else{echo route('showcylinder',$vehicle->formid);}}else{echo route('editcylinder',$vehicle->formid);}}?>">
+                                                        <?php }?>
+
+                                                        <?php if ($vehicle->Inspection_Status =="completed" && Auth::user()->regtype=="workshop")
+                                                        {
+                                                        ?>
+
+                                                        <a href="<?php if ($vehicle->formid==0){}else{if ($vehicle->Inspection_Status=='completed'){if($inspectionExpired==1){}else{echo route('showcylinder',$vehicle->formid);}}else{}}?>">
+                                                            <i class="fa"></i>{{$vehicle->Inspection_Status}}</a>
+                                                        <?php } else {echo $vehicle->Inspection_Status;}?>
                                                         
                                                      </td>
 
 
 
 
-
-
-<!--<?php //if ($vehicle->formid==0){echo route('newcylinderreg',$vehicle->Registration_no.'?recordid='.$vehicle->Record_no.'&stationno='.$vehicle->stationno);}else{if ($vehicle->Inspection_Status=='completed'){echo route('showcylinder',$vehicle->formid);}else{echo route('editcylinder',$vehicle->formid);}}?>-->
 
                                                    </tr>
                                                  @endforeach  

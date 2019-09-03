@@ -104,6 +104,7 @@
                             $lableworkshoporlab="Laboratory Name";
 
                             $route=Request::route()->getName();
+                            
                             if ($route=="register")
                             {
                                 $regtype="admin";

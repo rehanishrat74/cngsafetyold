@@ -126,11 +126,9 @@
 
 
 
-                        <p class="submit">
-                            <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-accent btn-block" value="Sign In" />
-                        </p>
 
-                    </form>
+
+                    <!--</form>-->
 
                         <?php 
                             //$routename
@@ -160,8 +158,32 @@
                             }*/
 
 
+                            if ($route!="preworkshoplogin"){ ?>
+
+                                <p class="submit">
+                                    <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-accent btn-block" value="Sign In" />
+                                </p>                                
+                            <?php }
 
                         ?>
+                    </form>
+
+
+                    <?php 
+
+                        
+                        if ($route=="preworkshoplogin")
+                        {
+                        
+                            //return redirect()->route($signup);  ?>                  
+                            <script>
+                                document.location.href= '<?php echo $signup; ?>' ;
+                            </script>
+
+                        <?php }
+                        //dd($route); "preworkshoplogin"
+                        //dd($signup);"http://cngsafety.test/signup_workshop"
+                    ?>
 
 
                     <!--<p id="nav"></p>-->
