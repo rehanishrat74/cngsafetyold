@@ -57,9 +57,9 @@ class AdminMiddleware
         {
             $errmsg="Unauthorized action.";
 
-            if (Auth::user()->activated==1) {
+            /*if (Auth::user()->activated==1) {
                 $errmsg="Your application is in process.We will email your credentials to login after approval.";
-            }
+            }*/
             //$errmsg=$errmsg."<br>type=.".$regtype;
             //$errmsg=$errmsg."<br>routename=".$route;
            abort(403, $errmsg); 
@@ -119,7 +119,7 @@ class AdminMiddleware
 
         }
 
-        if (Auth::user()->activated==1) {
+        if (Auth::user()->activated==0) {
             $isauthorise=false;
         }
 

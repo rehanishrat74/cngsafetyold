@@ -66,7 +66,7 @@
                     <div class="clearfix"></div>
                     <!-- MAIN CONTENT AREA STARTS -->
 
-                    <div class="col-xl-12">
+                    <div class="col-xl-12" >
                         <section class="box ">
                             <header class="panel_header">
                                 <h2 class="title float-left">Info</h2>
@@ -79,8 +79,15 @@
                             <div class="content-body">    
                                 <div class="row">
                                     <div class="col-12">
+
+
+
+
                                             <?php 
-                                                
+                                                if (Auth::user()->activated==0){
+                                                    echo "<p style=text-align: center;> To activate your account please contact <br>Email:cng.safety.taskforce@gmail.com <br> Helpline: 051-4901444</p>";
+                                                }
+
                                                 if (Auth::user()->regtype=="hdip" || 
                                                     Auth::user()->regtype=="apcng")
                                                 {
@@ -94,7 +101,7 @@
                                                 {
                                                  $targetroute ="registrations";   
                                                 }
-                                                
+                                                if (Auth::user()->activated==1){
                                             ?>                                        
                                                 <script>
                                                  //window.location.href = '{{route("view-records")}}'; 
@@ -103,6 +110,7 @@
 
                                                  //using a named route
                                                 </script>
+                                            <?php }?>
 
                                     </div>
                                 </div>
