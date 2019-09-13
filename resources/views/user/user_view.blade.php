@@ -41,6 +41,15 @@
 @endsection
 
 @section('content')
+        <!--<script src="../assets/js/jquery-3.2.1.min.js" type="text/javascript"></script> 
+        <script src="../assets/js/popper.min.js" type="text/javascript"></script> -->
+
+        <!-- CORE JS FRAMEWORK - END --> 
+
+
+        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+
+        <!--<script src="../assets/plugins/icheck/icheck.min.js" type="text/javascript"></script>-->
 
 
 
@@ -84,7 +93,7 @@
                             <div class="content-body">    <div class="row">
                                     <div class="col-12">
 
-
+                                    <div id =ratings>
                                         <!-- ********************************************** -->
 
 
@@ -108,16 +117,34 @@
                                                    <tr>
                                                      <td>{{ $user->id }}</td>
                                                      <td><?php echo $user->name.'<br>'.$user->contactno;?></td>
-                                                     <td><?php echo $user->email.'<br>Postal: '.$user->address;?></td>
+                                                     <td><?php echo $user->email.'<br>Postal: '.$user->address.'<br> Status: '  ;?>
+                                                         <font color="red">
+                                                         <?php if ($user->activated==0){ echo "Suspended.";} else { echo "Activated";} ?>
+                                                        </font>
+                                                     </td>
                                                      <td><?php if ($user->regtype=="workshop"){echo $user->regtype.'<br>'.$user->stationno;}else if ($user->regtype=="laboratory"){echo $user->regtype.'<br>'.$user->labname; }else{echo $user->regtype;}?> 
                                                      </td>
                                                      <td>{{ $user->province }}</td>
                                                      <td>{{ $user->city }}</td>
                                                      <td>
                                                         <?php  if (Auth::user()->readonly !=1){ ?>
-                                                        <a href="{{route('deleteuser',$user->id)}}">
-                                                        <img id='del'  src="../assets/images/cross.jpg" width="30px;" height="30px" >
+
+
+                                                        <!--<a href="{{route('deleteuser',$user->id)}}">-->
+                                                        <img id="del_<?php echo $user->id ?>"  src="../assets/images/cross.jpg" width="30px;" height="30px" class="delctrl" alt="-1">
+                                                        <!--</a>-->
+                                                        <?php  if ($user->activated ==0){ ?>
+                                                        
+                                                        <img id="act_<?php echo $user->id ?>"  src="../assets/images/activate.png" width="30px;" height="30px" alt="<?php echo "1"; ?>" class="imgctrl">
+                                                        
+                                                        <?php } /*else { ?>  
+
+                                                        <a href="{{route('disableuser',$user->id)}}">
+                                                        <img id="deact_<?php echo $user->id ?>"  src="../assets/images/suspend-black.png" width="30px;" height="30px" class="imgctrl" alt="0">
                                                         </a>
+
+                                                        <?php }*/
+                                                        ?>
                                                         <?php }?>
 
                                                     </td>
@@ -129,6 +156,7 @@
                                         <!-- ********************************************** -->
                                         <?=$users->render()?>
 
+                                    </div>    
 
 
 
@@ -137,16 +165,124 @@
                             </div>
                         </section></div>
 
-
-
-
-
-
-
-
-
                     <!-- MAIN CONTENT AREA ENDS -->
                 </section>
 
+
+<script>
+
+        
+            $(".delctrl").mouseup(function (event)
+            //$(".delctrl").live ("click",function (event)
+        {
+            event.preventDefault();
+            
+            var $post = {};
+
+            $post.id = $(this).attr('id');
+            //$post.name = $(this).attr('alt');   //got the province name here.            
+            //$post._token = document.getElementsByName("_token")[0].value;          
+            //-----------start ajax----------------------
+             var r = confirm("Do you want to delete the user");
+             if (r==true){
+                $(this).closest('tr').remove();
+
+                   $.ajax({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                    url: 'deleteuser',
+                    type: 'POST',
+                    data: $post,
+                    cache: false,
+                    success: function (data) {                        
+                        //alert(data);                        
+                        console.log(data);
+                        return data;
+                                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    
+                        console.log(textStatus);                    
+                                    }
+                    }); //end of ajax
+                }
+
+            //---------del ajax----------------------
+            
+        }); // end of ratings click
+
+    $(function () {
+        //$('#ratings').on('click', '.imgctrl', function(e){
+            //$("#ratings").click(function (event)
+        $("#ratings").on('click','.imgctrl',function (event)    
+        //$("#imgctrl").click(function (event)
+        {
+            event.preventDefault();
+            var $post = {};
+
+            $post.id = $(this).attr('id');
+            $post.name = $(this).attr('alt');   //got the province name here.            
+            $post._token = document.getElementsByName("_token")[0].value;          
+            //console.log($(this).parents("tr"));            
+            //console.log($(this).parents("tr")[0].innerText );
+                //var str=$(this).parents("tr")[0].innerText ;
+                //str=str.replace("Suspended", "Activated");
+                //$(this).parent('tr').append(str);                                    
+                $(this).closest('tr').remove();
+            $(this).hide();
+                        $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                url: 'dologinaccess',
+                type: 'POST',
+                data: $post,
+                cache: false,
+                success: function (data) {
+                        alert(data);
+
+                        //$(this).closest('tr').remove();
+                        //$(this).hide();
+                        
+                        
+
+                       //$(this).parents("tr").remove();
+                        //$(this).parent('tr').next('tr').remove();
+                        //$(this).parent('tr').append(str);                                    
+
+                        //console.log(data);
+                         //var id = $(imgctrl).data("Email");
+                         //alert(id);
+                         //alert($(this).closest("tr"));
+                         //console.log($(this).closest("tr").find());
+
+                    //var row = $(this).parents("tr").val();
+                    //console.log(row);
+
+
+                         //console.log($(this).parents("tr").val());
+                        //alert($(.imgctrl).parents("tr").val());
+                        //$(this).closest('tr').remove();
+                        //alert($(this).closest("tr").innerhtml());
+                         //alert( $(".imgctrl").val($(this).closest("tr")));
+
+                        
+                        return data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    
+                    console.log(textStatus);                    
+                }
+            }); //end of ajax
+        }); // end of ratings click
+
+//--------------------------------------------------
+        //$("#ratings").on('click','.delctrl',function (event)
+
+
+
+//-----------------------------------------------------
+    }); //end of $start
+</script>
 
 @endsection

@@ -42,6 +42,10 @@ Route::post('/getcities','PublicController@getcities')->name('getcities');
 
 Route::get('/searchSticker/{stickerNo}','PublicController@searchSticker')->name('searchSticker');
 
+//Route::get('/dologinaccess/{id}','PublicController@EnableLoginAccess')->name('enableuserget');
+
+Route::post('/dologindenied','PublicController@DisableLoginAccess')->name('disableuser');
+
 Auth::routes();
 
 
@@ -52,8 +56,8 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/view-records','UserViewController@index')->name('view-records');
     Route::post('/getajax','UserViewController@AjaxSearch')->name('searchajax');
     Route::get('/showlabs','UserViewController@HDIPusers')->name('showlabs');
-    Route::get('/deleteuser/{id}','UserViewController@delete')->name('deleteuser');
-
+    Route::post('/deleteuser','UserViewController@delete')->name('deleteuser');
+    Route::post('/dologinaccess','UserViewController@dologinaccess')->name('dologinaccess');
   //Route::get('/ajax','UserViewController@AjaxSearch')->name('view-records');
 
 

@@ -11,7 +11,7 @@ use DB;
 use Illuminate\Support\Str;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Crypt;
 
 
 class RegisterController extends Controller
@@ -54,6 +54,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+
 
 
 
@@ -129,26 +131,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+
         $fields;        
         $stationno=0;
         $labid=0;
         $workshopstationid=0;
-
-
+        $encryptedpwd= Crypt::encryptString($data['password']);
+//$encrypted = Crypt::encryptString('Hello world.');
         if ($data['regtype']=="admin")
         {
-            /*$fields=array([
-            'name' => $data['nickname'],
-            'email' => $data['email'],
-            'nickname' => $data['nickname'],
-            'password' => Hash::make($data['password']),
-            'regtype' =>  $data['regtype'],
-            'province' => $data['province'],
-            'city' => $data['city'],
-            'address' => $data['address'],
-            'contactno'=>$data['contactno'],
-            ]);*/
 
+
+  
             $user= User::create([
                 'name' => $data['nickname'],
                 'email' => $data['email'],
@@ -159,11 +154,16 @@ class RegisterController extends Controller
                 'city' => $data['city'],
                 'address' => $data['address'],
                 'contactno'=>$data['contactno'],
+                'encpwd' => $encryptedpwd,
+                'activated'=> 0, //false           
                 ]);            
+
 
         }
         else if ($data['regtype']=="workshop")
         {
+
+                        
      
             $getwshopid = DB::TABLE('users')
                         ->select(DB::raw('count(workshopstationid) as workshopid')) 
@@ -176,30 +176,6 @@ class RegisterController extends Controller
 
 
 /*
-use Illuminate\Support\Str;
-
- -- Create a testing string.
-$testString = '0123456789';
-
- -- 56789
-Str::substr($testString, 5);
-
- -- 6789
-Str::substr($testString, 6);
-
- -- 67
-Str::substr($testString, 6, 2);
-
- -- 89
-Str::substr($testString, -2);
-
- -- 8
-Str::substr($testString, -2, 1);
-
-$str1 = 'Hello world!';
-echo strlen($str1); // Outputs: 12
-
-
 PLR   for punjab -> lahore.
 PRP   for punjab -> Rawalpindi.
 SKI   for Sindh  -> karachi
@@ -243,13 +219,14 @@ B     for balochistan.
                 'technician'=>$data['technician'],
                 'ownercellno'=>$data['ownercellno'],
                 'ownername'=>$data['ownername'],
-                
+                'encpwd' => $encryptedpwd,
+                'activated'=> 0, //false                           
                 ]);            
 
         }
         else if ($data['regtype']=="laboratory")
         {
-
+            
 
             $getlabid = DB::TABLE('users')
                         ->select(DB::raw('count(labid) as newlabid')) 
@@ -261,22 +238,13 @@ B     for balochistan.
 
             
 
-            /*$fields=array([
-            'name' => $data['nickname'],
-            'email' => $data['email'],
-            'nickname' => $data['nickname'],
-            'password' => Hash::make($data['password']),
-            'regtype' =>  $data['regtype'],
-            'province' => $data['province'],
-            'city' => $data['city'],
-            'address' => $data['address'],
-            'contactno'=> $data['contactno'],
-            'labname'=> $data['labname'],
-            'labid'=> $labid,
-            'hdip_lic_no'=> $data['hdip_lic_no'],
-            ]);*/
 
 
+//php artisan key:generate
+//$encrypted = Crypt::encryptString('Hello world.');
+//$decrypted = Crypt::decryptString($encrypted);
+
+//$encrypted = 223;//Crypt::encryptString($data['password']);
 
             $user= User::create([
                 'name' =>$data['labname'],// $data['nickname'],
@@ -295,10 +263,13 @@ B     for balochistan.
                 'landlineno'=> $data['landlineno'],
                 'engineername'=> $data['engineername'],
                 'companyname' => $data['companyname'],             
-                'ownername' => $data['ownername'],             
+                'ownername' => $data['ownername'], 
+                'encpwd' => $encryptedpwd,
+                'activated'=> 0, //false                           
                 ]);            
 
         }
+
 
 /*
         $user= User::create([
@@ -322,9 +293,9 @@ B     for balochistan.
 
             
         //$user= User::create([$fields]); //temporary blocking creating table.
-         Mail::to($data['email'])->send(new WelcomeMail($user,$msg));
-         Mail::to('rehanishrat74@gmail.com')->send(new WelcomeMail($user,$msg)); 
-         //and temporary blocking
+        // Mail::to($data['email'])->send(new WelcomeMail($user,$msg));
+         //Mail::to('rehanishrat74@gmail.com')->send(new WelcomeMail($user,$msg)); 
+         
 
         // Mail::to($data['email'])->send(new WelcomeMail($user,$msg)); //and temporary blocking
 

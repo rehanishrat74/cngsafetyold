@@ -733,6 +733,7 @@ public function showUploadFile(Request $request) {
             $length=$request->input('length');
             $capacity=$request->input('capacity');
             $notes=$request->input('notes');
+            $inspector=$request->input('inspector');
 
 
             //---------setting inspection expiry date ---------------------
@@ -778,8 +779,8 @@ public function showUploadFile(Request $request) {
                     if ($duplicateSnos[0]->existssno<=0)
                     {
                         DB::insert('insert into RegisteredCylinders
-                        (LabCTS,CountryOfOrigin,BrandName,Standard,SerialNumber,LabUser,Date,InspectionExpiryDate,method,diameter,length,capacity,notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ',[$LabCTS,$CountryOfOrigin,$BrandName,$Standard,$SerialNumber,
-                                        $LabUser,$Date,$InspectionExpiryDate,$method,$diameter,$length,$capacity,$notes]);
+                        (LabCTS,CountryOfOrigin,BrandName,Standard,SerialNumber,LabUser,Date,InspectionExpiryDate,method,diameter,length,capacity,notes,inspector) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?) ',[$LabCTS,$CountryOfOrigin,$BrandName,$Standard,$SerialNumber,
+                                        $LabUser,$Date,$InspectionExpiryDate,$method,$diameter,$length,$capacity,$notes,$inspector]);
                         $id = DB::getPdo()->lastInsertId();
 
                     }
@@ -1711,7 +1712,7 @@ session()->flashInput($request->input());
 
             
         $CylinderDetails=DB::table('RegisteredCylinders')
-                    ->select ('id','LabCTS','BrandName','Standard' ,'SerialNumber','CountryOfOrigin' , 'LabUser' , 'Date', 'InspectionExpiryDate' ,   'stickerSerialNo','method')
+                    ->select ('id','LabCTS','BrandName','Standard' ,'SerialNumber','CountryOfOrigin' , 'LabUser' , 'Date', 'InspectionExpiryDate' ,   'stickerSerialNo','method','diameter','length','capacity','inspector','notes')
                     ->where ('id','=',$cylinderid)
                     ->get();            
 
@@ -1740,6 +1741,14 @@ session()->flashInput($request->input());
             $BrandName=$request->input('brand');
             $Standard=$request->input('standard');
             $SerialNumber=$request->input('SerialNo');
+
+            $diameter=$request->input('diameter');            
+            $length=$request->input('length');            
+            $capacity=$request->input('capacity');            
+            $inspector=$request->input('inspector');            
+            $notes =$request->input('notes');            
+
+
             $dt1=$request->input('edate');      
             $Date=date('Y-m-d', strtotime($dt1));   //inspection date
 
@@ -1761,9 +1770,11 @@ session()->flashInput($request->input());
             //$InspectionExpiryDate=date('Y-m-d', strtotime($dt1));
 
             $method=$request->input('method');
+
+
             $LabUser=Auth::user()->email;
             $LabCTS=Auth::user()->labname;
-
+            
 
 
             if (
@@ -1797,6 +1808,11 @@ session()->flashInput($request->input());
                                   'Date' =>$Date,
                                   'InspectionExpiryDate' =>$InspectionExpiryDate,
                                   'method'=>$method,
+                                    'diameter'=>$diameter,
+                                    'length'=>$length,
+                                    'capacity'=>$capacity,
+                                    'inspector'=>$inspector,
+                                    'notes'=> $notes ,                         
                                 ]);                                            
 
                     }

@@ -56,6 +56,10 @@ class AdminMiddleware
         if (!$this->allowedOperation($regtype,$route))
         {
             $errmsg="Unauthorized action.";
+
+            if (Auth::user()->activated==1) {
+                $errmsg="Your application is in process.We will email your credentials to login after approval.";
+            }
             //$errmsg=$errmsg."<br>type=.".$regtype;
             //$errmsg=$errmsg."<br>routename=".$route;
            abort(403, $errmsg); 
@@ -67,6 +71,7 @@ class AdminMiddleware
 
     public function allowedOperation($regtype,$route)
     {
+        
         
         if ($regtype=='admin')
         {
@@ -87,9 +92,7 @@ class AdminMiddleware
         } 
         else if ($regtype=='laboratory')
         {
-            /*if ($route=='registrations' || $route=='newcylinderreg'  || $route=='registrations-search' || $route=='testcylindersdataentryform' || $route=='savetestcylinders' || $route=='listlabtestedcylinders' || $route=='testedcylinders-search'){
-                $isauthorise=true;
-            }*/
+
             if ( $route=='testcylindersdataentryform' || $route=='savetestcylinders' || $route=='listlabtestedcylinders' || $route=='testedcylinders-search' || $route=='showlabs'  || $route=='logout'){
                 $isauthorise=true;
             }
@@ -98,12 +101,9 @@ class AdminMiddleware
 
         } else if ($regtype=='hdip' || $regtype=='apcng')
         {
-           /*if ($route=='showlabs'|| $route=='registrations' || $route=='newcylinderreg'  || $route=='registrations-search' || $route=='showcylinder' || $route=='editcylinder' ){
-                $isauthorise=true;
-            }*/
 
            if ($route=='showlabs' || $route=='listlabtestedcylinders' || $route=='testedcylinders-search' || $route=='editformfortestedcylinders' || $route =='updateformfortestedcylinders' || $route=='deleteuser' || $route=='view-records'  
-                || $route=='logout'){
+                || $route=='logout' ){
                 $isauthorise=true;
                 if (Auth::user()->readonly ==1 && ($route=='deleteuser' || $route=='editformfortestedcylinders' || $route =='updateformfortestedcylinders' ))
                 {
@@ -119,10 +119,23 @@ class AdminMiddleware
 
         }
 
+        if (Auth::user()->activated==1) {
+            $isauthorise=false;
+        }
+
         return $isauthorise;
+        //return true;
 
     }
 }
 
 
+            /*if ($route=='registrations' || $route=='newcylinderreg'  || $route=='registrations-search' || $route=='testcylindersdataentryform' || $route=='savetestcylinders' || $route=='listlabtestedcylinders' || $route=='testedcylinders-search'){
+                $isauthorise=true;
+            }*/
 
+
+           /*if ($route=='showlabs'|| $route=='registrations' || $route=='newcylinderreg'  || $route=='registrations-search' || $route=='showcylinder' || $route=='editcylinder' ){
+                $isauthorise=true;
+            }*/
+//|| $route=='testcylindersdataentryform'

@@ -7,8 +7,14 @@ use DB;
 use Carbon\Carbon;
 use DateTime;
 
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+
 class PublicController extends Controller
 {
+    protected $user;
     /**
      * Display a listing of the resource.
      *
@@ -29,6 +35,43 @@ class PublicController extends Controller
 
       return response()->json($cities, 200);
   }
+
+
+/*public function dologinaccess(Request $data){
+    
+     $id =str_replace("act_","",$data->id);
+
+    if ($data->name=="1")
+    {
+                    DB::table('users')
+                        ->where(['id'=> $id])
+                        ->update(['activated' => 1
+                                ]);   
+
+        $credentials=DB::table('users')
+          ->select(['email','encpwd','regtype'])
+          ->where(['id'=> $id])
+          ->get();                
+
+        $pwd= Crypt::decryptString($credentials[0]->encpwd);
+        $msg ="Your login credentials are: login id = ".$credentials[0]->email. " and password=".$pwd ;                 
+
+        if ($credentials[0]->regtype=="workshop")
+        {
+        $msg ="Your login credentials are: login id = ".$credentials[0]->email. " and password=".$pwd.". You can download the app from ".env('App_Link') ;
+        } 
+
+    }
+    
+    $status="id=".$id." data->name=".$data->name;
+    //Mail::to($data['email'])->send(new WelcomeMail($user,$msg));
+    Mail::to($credentials[0]->email)->send($msg);
+    
+    return response()->json("login credentials sent at ".$credentials[0]->email, 200);
+}*/
+public function DisableLoginAccess ($userid){
+
+}
 
     public function searchSticker($stickerNo) {
  /*$msg = "This is a simple message.";

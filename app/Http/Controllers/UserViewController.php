@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use App\user;
 //use  App\Http\Controllers\Auth;
 
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 
 class UserViewController extends Controller
 {
@@ -102,26 +105,77 @@ if (Auth::user()->regtype =='admin')
 
    }
 
-   public function delete($id)
+public function testmail(){
+
+
+  try {
+      $myuser=array("name"=>"rehan","email"=>"rehanishrat74@gmail.com");
+      Mail::to("rehanishrat74@gmail.com")->send(new WelcomeMail($myuser,"i m test"));
+      echo "mail sent";
+      } catch (Exception $e) {
+
+        //return $e;
+        echo $e;
+      }
+
+
+ 
+}
+public function dologinaccess(Request $data){
+    
+     $id =str_replace("act_","",$data->id);
+
+    if ($data->name=="1")
+    {
+                    DB::table('users')
+                        ->where(['id'=> $id])
+                        ->update(['activated' => 1
+                                ]);   
+
+        $credentials=DB::table('users')
+          ->select(['email','encpwd','regtype','name'])
+          ->where(['id'=> $id])
+          ->get();                
+
+        $pwd= Crypt::decryptString($credentials[0]->encpwd);
+        $msg ="Your login credentials are: login id = ".$credentials[0]->email. " and password=".$pwd ;                 
+
+        if ($credentials[0]->regtype=="workshop")
+        {
+        $msg ="Your login credentials are: login id = ".$credentials[0]->email. " and password=".$pwd.". You can download the app from ".env('App_Link') ;
+        } 
+
+    }
+    
+    $status="id=".$id." data->name=".$data->name;
+    
+    $myuser=array("name"=>$credentials[0]->name,"email"=>$credentials[0]->email);
+          
+    //Mail::to($credentials[0]->email)->send(new WelcomeMail($myuser,$msg));
+    
+    return response()->json("login credentials sent at ".$credentials[0]->email, 200);
+}
+
+   public function delete(Request $request)
    {
 
+    $id =str_replace("del_","",$request->id);
 
-
-      $user=DB::select('select email from users where id=?',[$id]) ;
+      /*$user=DB::select('select email from users where id=?',[$id]) ;
       $email='blocked';
-      $email=$email.$user[0]->email;
+      $email=$email.$user[0]->email;*/
                               
       
       DB::table('users')
           ->where(['id'=> $id])
-          ->update(['deleted' => 1,'email'=>$email ]);                    
+          ->update(['deleted' => 1 ]);
 
 
 
 
 
 
- if (Auth::user()->regtype =='admin')
+ /*if (Auth::user()->regtype =='admin')
 {
   $users = DB::table('users')
         ->select('users.*')
@@ -136,13 +190,14 @@ if (Auth::user()->regtype =='admin')
         ->where('regtype','=','laboratory')
         ->paginate(10);
 
-}
+}*/
             
       
-      $usertype =Auth::user()->regtype;
-      $treeitems =DB::select('select * from AccessRights where regtype =?',[$usertype]);
+      //$usertype =Auth::user()->regtype;
+      //$treeitems =DB::select('select * from AccessRights where regtype =?',[$usertype]);
       //print_r($treeitems);
-      return view('user.user_view',['users'=>$users,'treeitems'=>$treeitems])->with('page',1);
+      //return view('user.user_view',['users'=>$users,'treeitems'=>$treeitems])->with('page',1);
+      return response()->json("deleted", 200);
       
 
    }

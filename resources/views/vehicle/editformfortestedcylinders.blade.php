@@ -133,11 +133,6 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="controls">
-
-
-
-
-
                                                                 <select class="form-control" id ="brand" name="brand">
                                                                     @foreach ($brands as $brand)
                                                                     <option value="<?php echo $brand->brandname;?>"
@@ -151,9 +146,88 @@
                                                             </div>                                                
                                                         </div>
                                                     </div> <!-- end of brand name -->
+<!------------------------------->
+                                                    <div class="form-group row" >
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                            <label class="form-label" >Diameter</label>
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                                <select class="form-control" id ="diameter" name="diameter">
 
-                                                   
+<?php 
+ $diameters = array("267 mm","273 mm","280 mm","317 mm","323 mm","325 mm","340 mm","other");
+    $d=0;
+    for ($d=0;$d<8;$d++){ ?>
+
+    <option value="<?php echo $diameters[$d];?>" 
+       <?php if ($diameters[$d] == $cylinderdetails[0]->diameter){echo 'selected';}?> 
+              >
+                    <?php echo $diameters[$d];?>                            
+    </option>
+    <?php  }
+?>
+
+                                                                </select>                                 
+                                                            </div>          
+                                                        </div>
+                                                    </div> <!-- end of diameter -->
+<!------------------------------->
+                                                    <div class="form-group row" >
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                            <label class="form-label" >Length</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                                <select class="form-control" id ="length" name="length">
+
+<?php 
+ $lengths = array("730 mm","830 mm","900 mm","912 mm","1725 mm","other");
+    $l=0;
+    for($l=0;$l <6;$l++){ ?>
+          <option value="<?php echo $lengths[$l];?>" <?php if ($lengths[$l] ==$cylinderdetails[0]->length ){echo 'selected';} ?> > 
+            <?php echo $lengths[$l];?>              
+          </option>
+    <?php  }
+?>
+
+                                                                </select>                                 
+                                                            </div>          
+                                                        </div>
+                                                    </div> <!-- end of length -->
+<!------------------------------->
+                                                    <div class="form-group row" >
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                            <label class="form-label" >Capacity</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                                <select class="form-control" id ="capacity" name="capacity">
+
+<?php 
+ $capacities=array("30 WLC","40 WLC","41 WLC","45 WLC","50 WLC","55 WLC","58 WLC","60 WLC","62 WLC","64 WLC","65 WLC","70 WLC","74 WLC","75 WLC","80 WLC","85 WLC","90 WLC","30-85 WLC","30-90 WLC","40-90 WLC","50-140 WLC","other");
+
+     $c=0;
+    for ($c=0;$c<22;$c++){ ?>
+        <option value="<?php echo  $capacities[$c]; ?>" <?php if ($capacities[$c] ==$cylinderdetails[0]->capacity){echo 'selected';}?>    ><?php echo $capacities[$c]; ?></option>
+    <?php  }
+?>
+
+                                                                </select>                                 
+                                                            </div>          
+                                                        </div>
+                                                    </div> <!-- end of capacity -->
+
+<!-------------------------------->                                                   
 
                                                     <div class="form-group row" >
                                                         <div class="col-6">
@@ -184,22 +258,52 @@
                                                             <label class="form-label" >Test Method</label>
                                                             </div>
                                                         </div>
+                                                        
                                                         <div class="col-6">
                                                             <div class="controls">
                                                                 <select class="form-control" id="method"  name="method" >
                                                                     <option value ="Hydrostatic - Direct" 
-
-                                                                    <?php if ($cylinderdetails[0]->Standard=="Hydrostatic - Direct"){echo 'selected';}?>                                             
+                                                                    
+                                                            <?php if ($cylinderdetails[0]->method=="Hydrostatic - Direct"){echo 'selected';}?>                                             
                                                                      >Hydrostatic - Direct</option>
+
+
                                                                     <option value ="Hydrostatic - Water Jaket" 
 
-                                                                    <?php if ($cylinderdetails[0]->Standard=="Hydrostatic - Water Jaket"){echo 'selected';}?>  
+                                                            <?php if ($cylinderdetails[0]->method=="Hydrostatic - Water Jaket"){echo 'selected';}?>  
 
                                                                      >Hydrostatic - Water Jaket</option>
                                                                  </select>
                                                             </div>
                                                         </div>
                                                     </div>
+<!----------------------------------------------->
+                                                    <div class="form-group row" >
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                            <label class="form-label" >3rd Party Inspector</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                                <select class="form-control" id ="inspector" name="inspector">
+
+<?php 
+ $inspectors = array("Lloyd's, Bureau Vertas, ABS, SGS", "-SGS-All Tests carried out by International Lab Powertech Inc, Canada", "-Bureau Veritas","-SGS-" );
+
+    $i=0;
+    for ($i=0;$i<4;$i++)
+    { ?>
+    <option value ="<?php echo $inspectors[$i];?>"  <?php if($inspectors[$i]==$cylinderdetails[0]->inspector){echo ' selected';} ?> >
+    <?php echo $inspectors[$i]; ?></option>
+    <?php  echo $cylinderdetails[0]->inspector.'<br>'; }
+?>
+                                                                </select>                                 
+                                                            </div>          
+                                                        </div>
+                                                    </div> <!-- end of inspector -->
+<!------------------------------------------------->                                                    
 
                
 
@@ -222,6 +326,24 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+<!-------------------------------------------------->
+                                                    <div class="form-group row" >
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                                            <label class="form-label" >Notes</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="controls">
+                                              <textarea class="form-control"  name="notes" id="notes" placeholder="Notes" > <?php echo $cylinderdetails[0]->notes;?></textarea>
+           
+                                                            </div>                                      
+                                                        </div>
+                                                    </div> <!-- end of notes -->
+
+<!------------------------------------------------->                                                    
 
 
                                                     <div class="form-group row" >
@@ -254,8 +376,9 @@
 
                                                         
                                                         <div class="col-6">
-                                                            <div class="controls">
-                                                                <input type="text" value="{{date('m/d/Y', strtotime($cylinderdetails[0]->InspectionExpiryDate))}}" class="form-control" data-format="mm/dd/yyyy" placeholder="Expiry Date" id="expiry" name="expiry" readonly>
+                                                            <div class="controls">                                          
+                                                                <!--<input type="text" value="{{date('m/d/Y', strtotime($cylinderdetails[0]->InspectionExpiryDate))}}" class="form-control" data-format="mm/dd/yyyy" placeholder="Expiry Date" id="expiry" name="expiry" readonly>-->
+                                                                <input type="text" value="{{date('m/d/Y', strtotime($cylinderdetails[0]->Date))}}" class="form-control{{ $errors->has('edate') ? ' is-invalid' : '' }} datepicker" data-format="mm/dd/yyyy"  id="expiry" name="expiry" placeholder="date (e.g. 04/03/2015)" autocomplete="off">                                                                
                                                             </div>
                                                 <input type="hidden" id ="year" name="year">
                                                 <input type="hidden" id ="month" name="month">
@@ -269,7 +392,7 @@
 
                                                     <div class="form-group row">
                                                         <p>&nbsp;</p>
-                                                        <div class="col-12" style="height:28em;overflow-y: auto;  background-color:#dddddd;color:black">
+                                                        <div class="col-12" style="height:54em;overflow-y: auto;  background-color:#dddddd;color:black">
                                                             <div class="controls">
                                                                 Serial nos added <br>
                                                                  <?php echo  session()->get('registeredcylinders') ?>
@@ -333,13 +456,13 @@ var expiryday =document.getElementById("day");
     var month = d.getMonth() ;
     var day = d.getDate();
     var year5 = new Date(year + 5, month, day)
-
+    if ($(this)[0].id=="edate"){
      expiryyear.value =year5.getFullYear();
      expirymonth.value =year5.getMonth()+1;
      expiryday.value =year5.getDate() ;
     
     expiry.value=year5.toLocaleDateString();;
-
+        }
     //console.log(year5);
    });
 
@@ -352,6 +475,7 @@ var expiryday =document.getElementById("day");
     var day = d.getDate();
     var year5 = new Date(year + 5, month, day)
 //d.toLocaleDateString();
+    if ($(this)[0].id=="edate"){
     expiry.value=year5.toLocaleDateString();;
      
      expiryyear.value =year5.getFullYear();
@@ -359,6 +483,7 @@ var expiryday =document.getElementById("day");
      expiryday.value =year5.getDate() ;    
     //console.log(year5);
     //console.log(addressinput);
+        }
    });
 
 });
