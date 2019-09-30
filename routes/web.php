@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::post('/deleteuser','UserViewController@delete')->name('deleteuser');
     Route::post('/dologinaccess','UserViewController@dologinaccess')->name('dologinaccess');
   //Route::get('/ajax','UserViewController@AjaxSearch')->name('view-records');
+    Route::get('/showuser/{id}','UserViewController@showuser')->name('showuser');
+    Route::post('/edituser','UserViewController@edituser')->name('edituser');
 
 
     Route::get('/categories','vehicleCategoryController@index')->name('view-categories');

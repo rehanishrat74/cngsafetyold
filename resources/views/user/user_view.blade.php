@@ -115,8 +115,15 @@
                                             <tbody>
                                                    @foreach ($users as $user)
                                                    <tr>
-                                                     <td>{{ $user->id }}</td>
+                                                    <?php if(Auth::user()->regtype  =="admin"){ ?>
+                                                     <td><a href="{{route('showuser',$user->id)}}" > {{ $user->id }}</a></td>
+                                                     <td><a href="{{route('showuser',$user->id)}}" ><?php echo $user->name.'<br>'.$user->contactno;?></a></td>
+                                                    <?php } else { ?>
+
+                                                     <td> {{ $user->id }}</td>
                                                      <td><?php echo $user->name.'<br>'.$user->contactno;?></td>
+                                                    <?php }?>
+
                                                      <td><?php echo $user->email.'<br>Postal: '.$user->address.'<br> Status: '  ;?>
                                                          <font color="red">
                                                          <?php if ($user->activated==0){ echo "Suspended.";} else { echo "Activated";} ?>

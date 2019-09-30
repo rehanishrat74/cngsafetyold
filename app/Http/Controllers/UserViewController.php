@@ -14,6 +14,8 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 
+use Illuminate\Support\Facades\Validator;
+
 class UserViewController extends Controller
 {
   public function __construct() {
@@ -67,6 +69,135 @@ if (Auth::user()->regtype =='admin')
       //print_r($treeitems);
       return view('user.user_view',['users'=>$users,'treeitems'=>$treeitems])->with('page',1);
    }
+
+  public function showuser($userid)
+    {
+      //echo 'user='.$userid;
+      $usertype =Auth::user()->regtype;
+      $treeitems =DB::select('select * from AccessRights where regtype =?',[$usertype]);
+
+
+
+      $userdetails =DB::select('select id,name,email,address,regtype,labname,contactno,hdip_lic_no,cellnoforinspection,technician,ownercellno,ownername,mobileno,landlineno,engineername,companyname,cellverified,imei,latitude,longitude,stationno,city,province from users where id =?',[$userid]);
+
+      
+
+      return view ('user.showuser',['treeitems'=>$treeitems,'userdetails'=>$userdetails]);
+    }
+
+    public function edituser(Request $data)
+    {
+      
+
+
+      if ($data->userregtypehidden=="admin")
+      {
+
+        //'userid' => 'required','useremail' => 'required'
+         $adminfields =array('username' => 'required','useraddress' => 'required','usercontact' =>'required','usermobileno'=> 'required');
+
+             $this->validate($data,$adminfields);
+
+              DB::table('users')
+                ->where('id','=', $data->useridhidden)                
+                ->update(['name' => $data->username,
+                          'address' => $data->useraddress,
+                          'contactno' => $data->usercontact,
+                          'mobileno' => $data->usermobileno
+                ]);   
+                
+      } 
+      elseif ($data->userregtypehidden=="workshop")
+      {
+         $workshopfields =array('username' => 'required', 'useraddress' => 'required', 'usercontact' => 'required', 'userownercellno' => 'required' , 'userownername'=> 'required' , 'usertechnician'=>'required' );
+
+             $this->validate($data,$workshopfields);        
+              
+              DB::table('users')
+                ->where('id','=', $data->useridhidden)                
+                ->update(['name' => $data->username,
+                          'address' => $data->useraddress,
+                          'contactno' => $data->usercontact,
+                          'ownercellno' =>$data->userownercellno,
+                          'ownername' => $data->userownername,
+                          'technician' => $data->usertechnician
+                          
+                ]);                          
+
+          $cellverified =0;
+          if (is_null($data->isverified) )
+          {
+            $cellverified =0;
+          } elseif ($data->isverified==0){
+            $cellverified =0;
+          }elseif ($data->isverified==1){
+            $cellverified =1;
+          }
+
+          
+          $inspectionquery =DB::select('select cellnoforinspection,cellverified,imei from users where id =?',[$data->useridhidden]);
+          
+          if ($inspectionquery[0]->cellverified!=$cellverified ||   
+              $inspectionquery[0]->cellnoforinspection!=$data->usercellnoforinspection ||
+              $inspectionquery[0]->imei !=$data->userimei ) 
+          {
+            //if any values changes reinstall of app is needed.
+
+              DB::table('users')
+                ->where('id','=', $data->useridhidden)                
+                ->update(['cellnoforinspection' => $data->usercellnoforinspection,
+                          'cellverified' => 0,
+                          'imei' => '',
+                          'pin_code' => null
+                ]);                            
+
+          } else {
+              DB::table('users')
+                ->where('id','=', $data->useridhidden)                
+                ->update([ 'cellverified' =>$cellverified,
+
+                 ]);                          
+
+          }
+
+            
+
+          
+
+      }
+      elseif ($data->userregtypehidden=="laboratory")
+      {
+
+         $labfields =array('username' => 'required','useraddress' => 'required','usercontact' =>'required','userlabname'=>'required' , 'userownername'=>'required','usercompanyname'=>'required', 'userengineername'=>'required','userlandlineno'=>'required' , 'usermobileno'=> 'required','userhdip_lic_no'=>'required');
+
+             $this->validate($data,$labfields);
+
+              DB::table('users')
+                ->where('id','=', $data->useridhidden)                
+                ->update(['name' => $data->username,
+                          'address' => $data->useraddress,
+                          'contactno' => $data->usercontact,
+                          'ownername' => $data->userownername,
+                          'labname' => $data->userlabname,
+                          'companyname' => $data->usercompanyname,
+                          'engineername' => $data->userengineername,
+                          'landlineno' => $data->userlandlineno,
+                          'mobileno' => $data->usermobileno,
+                          'hdip_lic_no' => $data->userhdip_lic_no
+                          
+                ]);   
+
+
+
+      }
+
+
+        return redirect()->back()->with('message', 'Record Updated');
+
+
+
+
+    }
 
    public function HDIPusers()
    {
