@@ -377,7 +377,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="controls">
-                                                                <input type="checkbox" value="<?php echo $userdetails[0]->cellverified; ?>" <?php if ($userdetails[0]->cellverified==1){echo "checked";} ?> id="isverified" name ="isverified" ></label>                           
+                                                                <input type="checkbox" value="<?php echo $userdetails[0]->cellverified; ?>" <?php if ($userdetails[0]->cellverified==1){echo "checked";} ?> id="isverified" name ="isverified" onclick="getcheckbox()" ></label>                           
                                                             </div>
                                                         </div>
                                                     </div>
@@ -621,7 +621,18 @@
                     </div>  <!-- end of Main Content Area Col12-->
                 </section> <!-- end of main wrapper -->
 
+<script>
+function getcheckbox() {
+  var checkBox = document.getElementById("isverified");
 
+  if (checkBox.checked == true){
+    checkBox.value=1;
+  } else {
+     checkBox.value=0;
+  }
+  
+}
+</script>
 
 
 

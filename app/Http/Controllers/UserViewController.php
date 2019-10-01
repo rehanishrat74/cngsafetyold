@@ -125,6 +125,7 @@ if (Auth::user()->regtype =='admin')
                 ]);                          
 
           $cellverified =0;
+          //dd($data->isverified);
           if (is_null($data->isverified) )
           {
             $cellverified =0;
@@ -141,9 +142,10 @@ if (Auth::user()->regtype =='admin')
               $inspectionquery[0]->cellnoforinspection!=$data->usercellnoforinspection ||
               $inspectionquery[0]->imei !=$data->userimei ) 
           {
-            //if any values changes reinstall of app is needed.
-
-              DB::table('users')
+            //if any values changes reinstall of app is needed.            
+              if ($cellverified==0){
+                //dd($cellverified);
+                  DB::table('users')
                 ->where('id','=', $data->useridhidden)                
                 ->update(['cellnoforinspection' => $data->usercellnoforinspection,
                           'cellverified' => 0,
@@ -151,14 +153,16 @@ if (Auth::user()->regtype =='admin')
                           'pin_code' => null
                 ]);                            
 
-          } else {
-              DB::table('users')
+              } else {
+                DB::table('users')
                 ->where('id','=', $data->useridhidden)                
                 ->update([ 'cellverified' =>$cellverified,
-
+                  'cellnoforinspection' => $data->usercellnoforinspection
                  ]);                          
 
-          }
+                }
+
+          } 
 
             
 
