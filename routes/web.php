@@ -21,6 +21,13 @@ Route::get('/logout', function(){
     //return redirect()->route('');
 });
 
+Route::get('/testmethods/getcodes', 'Test@doGetCodes');
+Route::get('/testmethods/GetInspectionDetails', 'Test@doGetInspectionDetails');
+Route::get('/testmethods/UpdateParticulars', 'Test@doUpdateParticulars');
+Route::get('/testmethods/TestKit', 'Test@doUpdateCngKit');
+Route::get('/testmethods/TestCylinders', 'Test@doUpdateCylinders');
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/view-records','UserViewController@index')->name('view-records');
 
